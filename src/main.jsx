@@ -6,9 +6,13 @@ import App from './App.jsx'
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
+if (!clientId) {
+  console.warn("Google Client ID is missing. Google Login will not function correctly.");
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId={clientId}>
+    <GoogleOAuthProvider clientId={clientId || ''}>
       <App />
     </GoogleOAuthProvider>
   </StrictMode>,
