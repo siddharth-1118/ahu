@@ -20,10 +20,20 @@ const AuthPage = () => {
     });
   };
 
+  const hasGoogleId = !!import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
   const loginWithGoogle = useGoogleLogin({
     onSuccess: handleSuccess,
-    onError: () => console.error('Login Failed'),
+    onError: (err) => console.error('Google Login Error:', err),
   });
+
+  const handleGoogleClick = () => {
+    if (!hasGoogleId) {
+      alert("Google Login is not configured. Please add VITE_GOOGLE_CLIENT_ID to your environment variables.");
+      return;
+    }
+    loginWithGoogle();
+  };
 
   const handleAuth = (e) => {
     e.preventDefault();
@@ -81,7 +91,7 @@ const AuthPage = () => {
           </form>
 
           <div className="flex gap-4">
-            <button onClick={() => loginWithGoogle()} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
+            <button onClick={handleGoogleClick} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
               <span className="material-symbols-outlined text-sm">google</span> Google
             </button>
             <button onClick={handleSuccess} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
