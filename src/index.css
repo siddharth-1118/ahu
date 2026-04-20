@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-on-tertiary-container: #00574f;
+  --color-tertiary-fixed: #56f1e0;
+  --color-surface-container-lowest: #000000;
+  --color-secondary-fixed-dim: #ffb0a3;
+  --color-on-tertiary-fixed-variant: #006159;
+  --color-inverse-primary: #6c5f00;
+  --color-tertiary: #69ffee;
+  --color-primary-fixed: #fee96f;
+  --color-on-primary-fixed-variant: #6c5f00;
+  --color-on-secondary: #4a0000;
+  --color-on-tertiary: #006058;
+  --color-surface-variant: #1b1b62;
+  --color-error-dim: #d53d18;
+  --color-on-tertiary-fixed: #00423c;
+  --color-inverse-surface: #fcf8ff;
+  --color-on-secondary-fixed-variant: #97271a;
+  --color-surface-tint: #fee96f;
+  --color-surface-container-highest: #1b1b62;
+  --color-outline-variant: #424375;
+  --color-on-primary-fixed: #4c4300;
+  --color-on-secondary-fixed: #6e0502;
+  --color-on-secondary-container: #ffc2b8;
+  --color-secondary-container: #891c12;
+  --color-on-primary: #615500;
+  --color-on-error: #450900;
+  --color-on-surface-variant: #a5a6df;
+  --color-inverse-on-surface: #4f5083;
+  --color-surface-container: #10104d;
+  --color-background: #060539;
+  --color-primary-container: #b3a12e;
+  --color-tertiary-fixed-dim: #43e2d2;
+  --color-surface-dim: #060539;
+  --color-on-error-container: #ffd2c8;
+  --color-primary: #fee96f;
+  --color-surface-container-high: #151557;
+  --color-surface-container-low: #0a0942;
+  --color-on-surface: #e5e3ff;
+  --color-primary-fixed-dim: #efdb63;
+  --color-on-primary-container: #292300;
+  --color-secondary: #ff725e;
+  --color-error-container: #b92902;
+  --color-primary-dim: #efdb63;
+  --color-secondary-dim: #ff725e;
+  --color-tertiary-container: #56f1e0;
+  --color-tertiary-dim: #43e2d2;
+  --color-surface-bright: #20216d;
+  --color-outline: #7071a6;
+  --color-surface: #060539;
+  --color-secondary-fixed: #ffc4ba;
+  --color-error: #ff7351;
+  --color-on-background: #e5e3ff;
+
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-on-background font-body;
+    margin: 0;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
