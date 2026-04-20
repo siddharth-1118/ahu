@@ -17,9 +17,10 @@ const Dashboard = () => {
       <aside className="w-72 fixed inset-y-0 bg-surface/80 backdrop-blur-3xl border-r border-white/5 p-10 flex flex-col gap-12 z-50">
         <h1 className="text-3xl font-black text-primary tracking-tighter italic">Picksell</h1>
         <nav className="flex-1 space-y-3">
-          <NavItem icon="dashboard" label="Overview" active />
+          <NavItem icon="dashboard" label="Overview" active onClick={() => navigate('/dashboard')} />
           <NavItem icon="account_balance_wallet" label="My Wallet" />
           <NavItem icon="leaderboard" label="Analytics" />
+          <NavItem icon="public" label="Public Site" onClick={() => navigate('/landing')} />
           <NavItem icon="settings" label="System" />
         </nav>
         <button onClick={logout} className="flex items-center gap-4 p-4 text-error font-black hover:bg-error/10 rounded-[2rem] transition-all group">
@@ -54,8 +55,12 @@ const Dashboard = () => {
   );
 };
 
-const NavItem = ({ icon, label, active }) => (
-  <a href="#" className={`flex items-center gap-4 p-4 rounded-[1.5rem] font-bold transition-all ${active ? 'bg-primary text-on-primary shadow-xl shadow-primary/20' : 'text-on-surface/40 hover:bg-surface-container hover:text-on-surface'}`}>
+const NavItem = ({ icon, label, active, onClick }) => (
+  <a 
+    href="#" 
+    onClick={(e) => { e.preventDefault(); onClick?.(); }}
+    className={`flex items-center gap-4 p-4 rounded-[1.5rem] font-bold transition-all ${active ? 'bg-primary text-on-primary shadow-xl shadow-primary/20' : 'text-on-surface/40 hover:bg-surface-container hover:text-on-surface'}`}
+  >
     <span className="material-symbols-outlined">{icon}</span> {label}
   </a>
 );
