@@ -3,7 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const logout = () => { navigate('/'); };
+  const userName = localStorage.getItem('userName') || 'User';
+
+  const logout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userName');
+    window.dispatchEvent(new Event('storage'));
+    navigate('/');
+  };
 
   return (
     <div className="flex min-h-screen bg-surface-container-low text-on-surface font-body overflow-hidden">
@@ -24,7 +31,7 @@ const Dashboard = () => {
         <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[120px] -z-10" />
         <header className="flex justify-between items-end mb-16 px-4">
           <div className="space-y-2"><h2 className="text-6xl font-black tracking-tightest">Vitals</h2>
-          <p className="text-on-surface-variant text-lg font-bold">Welcome back, <span className="text-on-surface">Shakir!</span></p></div>
+          <p className="text-on-surface-variant text-lg font-bold">Welcome back, <span className="text-on-surface capitalize">{userName}!</span></p></div>
           <button className="px-8 py-4 bg-surface-container/60 backdrop-blur-xl border border-white/10 rounded-full font-black text-xs uppercase tracking-widest shadow-2xl hover:scale-105 transition-all">March 2024</button>
         </header>
 

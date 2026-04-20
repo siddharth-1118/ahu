@@ -1,12 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
+  const handleSuccess = (tokenResponse) => {
+    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+    })
+    .then(res => res.json())
+    .then(data => {
+      const name = data.email.split('@')[0];
+      localStorage.setItem('userName', name);
+      localStorage.setItem('isAuthenticated', 'true');
+      window.dispatchEvent(new Event('storage'));
+      navigate('/dashboard');
+    });
+  };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: handleSuccess,
+    onError: () => console.error('Login Failed'),
+  });
+
   const handleAuth = (e) => {
     e.preventDefault();
+    localStorage.setItem('userName', 'Demo');
     localStorage.setItem('isAuthenticated', 'true');
     window.dispatchEvent(new Event('storage'));
     navigate('/dashboard');
@@ -60,10 +81,10 @@ const AuthPage = () => {
           </form>
 
           <div className="flex gap-4">
-            <button onClick={handleAuth} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
+            <button onClick={() => loginWithGoogle()} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
               <span className="material-symbols-outlined text-sm">google</span> Google
             </button>
-            <button onClick={handleAuth} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
+            <button onClick={handleSuccess} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
               <span className="material-symbols-outlined text-sm">laptop_mac</span> Apple
             </button>
           </div>
