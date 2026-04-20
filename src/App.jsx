@@ -39,6 +39,9 @@ function App() {
         
         {/* Landing page is always accessible */}
         <Route path="/landing" element={<LandingPage />} />
+
+        {/* Catch-all: Redirect unknown routes to home */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

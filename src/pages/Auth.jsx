@@ -5,42 +5,18 @@ import { useGoogleLogin } from '@react-oauth/google';
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-
-  const handleSuccess = (tokenResponse) => {
-    fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-    })
-    .then(res => res.json())
-    .then(data => {
-      const name = data.email.split('@')[0];
-      localStorage.setItem('userName', name);
-      localStorage.setItem('isAuthenticated', 'true');
-      window.dispatchEvent(new Event('storage'));
-      navigate('/dashboard');
-    });
-  };
-
   const hasGoogleId = !!import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: handleSuccess,
-    onError: (err) => console.error('Google Login Error:', err),
-  });
-
-  const handleGoogleClick = () => {
-    if (!hasGoogleId) {
-      alert("Google Login is not configured. Please add VITE_GOOGLE_CLIENT_ID to your environment variables.");
-      return;
-    }
-    loginWithGoogle();
+  const handleSuccess = (prefix) => {
+    localStorage.setItem('userName', prefix);
+    localStorage.setItem('isAuthenticated', 'true');
+    window.dispatchEvent(new Event('storage'));
+    navigate('/dashboard');
   };
 
   const handleAuth = (e) => {
     e.preventDefault();
-    localStorage.setItem('userName', 'Demo');
-    localStorage.setItem('isAuthenticated', 'true');
-    window.dispatchEvent(new Event('storage'));
-    navigate('/dashboard');
+    handleSuccess('Demo');
   };
 
   return (
@@ -67,16 +43,12 @@ const AuthPage = () => {
       {/* Form Section (Right) */}
       <section className="flex items-center justify-center p-8 lg:p-24 bg-surface-container-low/30">
         <div className="w-full max-w-md space-y-10 relative">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl -z-10" />
           <header className="space-y-2">
             <div className="text-xs font-black uppercase tracking-widest text-primary mb-6">Picksell Platform</div>
             <h2 className="text-5xl font-black tracking-tight">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
             <p className="text-on-surface-variant font-medium">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
-              <button 
-                onClick={() => setIsLogin(!isLogin)} 
-                className="ml-2 text-on-surface font-bold underline decoration-primary decoration-4 underline-offset-4 hover:text-primary transition-colors"
-              >
+              <button onClick={() => setIsLogin(!isLogin)} className="ml-2 text-on-surface font-bold underline decoration-primary decoration-4 underline-offset-4 hover:text-primary transition-colors">
                 {isLogin ? 'Sign up' : 'Log in'}
               </button>
             </p>
@@ -86,21 +58,44 @@ const AuthPage = () => {
             <AuthInput label="Business Email" type="email" placeholder="ceo@company.com" />
             <AuthInput label="Password" type="password" placeholder="••••••••" />
             <button className="w-full py-5 bg-primary text-on-primary font-black rounded-[2rem] hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/20 text-lg">
-              {isLogin ? 'Sign In to Dashboard' : 'Launch Your Platform'}
+              {isLogin ? 'Sign In' : 'Get Started'}
             </button>
           </form>
 
           <div className="flex gap-4">
-            <button onClick={handleGoogleClick} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
-              <span className="material-symbols-outlined text-sm">google</span> Google
-            </button>
-            <button onClick={handleSuccess} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
+            {hasGoogleId ? (
+              <GoogleLoginButton onSuccess={handleSuccess} />
+            ) : (
+              <button onClick={() => alert('Google Login is not configured in environment variables.')} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold opacity-50 flex items-center justify-center gap-2">
+                <span className="material-symbols-outlined text-sm">google</span> Google
+              </button>
+            )}
+            <button onClick={() => handleSuccess('AppleUser')} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2">
               <span className="material-symbols-outlined text-sm">laptop_mac</span> Apple
             </button>
           </div>
         </div>
       </section>
     </main>
+  );
+};
+
+const GoogleLoginButton = ({ onSuccess }) => {
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      })
+      .then(res => res.json())
+      .then(data => onSuccess(data.email.split('@')[0]));
+    },
+    onError: (err) => console.error('Google Login Error:', err),
+  });
+
+  return (
+    <button onClick={() => login()} className="flex-1 py-4 bg-surface border border-outline/10 rounded-2xl font-bold hover:bg-surface-bright transition-all flex items-center justify-center gap-2 text-on-surface">
+      <span className="material-symbols-outlined text-sm">google</span> Google
+    </button>
   );
 };
 
