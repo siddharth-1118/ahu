@@ -1,16 +1,66 @@
-# React + Vite
+# 📦 Picksell - Global Selling Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Picksell is a high-fidelity, premium global selling platform designed for modern brands. It features a cinematic user experience, advanced design language, and an extremely concise codebase.
 
-Currently, two official plugins are available:
+## ✨ Key Features
+- **Cinematic Landing Page**: Global commerce hero section with vibrant mesh gradients.
+- **Premium Auth Portal**: High-fidelity, split-screen layout with Google Authentication.
+- **Financial Dashboard**: Bento-style stats, dynamic vitals, and transaction flow tracking.
+- **Next-Gen Stack**: Built with **React** and **Tailwind CSS v4** for maximum performance.
+- **Bulletproof Resiliency**: Fallback mechanisms for offline/missing configuration states.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📸 Webpages Preview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Landing Page
+*Global scale commerce with elite design.*
+![Landing Page](./public/screenshots/landing.png)
 
-## Expanding the ESLint configuration
+### 2. Authentication Portal
+*Secure access with high-fidelity visuals.*
+![Auth Page](./public/screenshots/auth.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Financial Dashboard
+*Real-time business vitals and transaction tracking.*
+![Dashboard](./public/screenshots/dashboard.png)
+
+---
+
+## 🛠️ Setup & Installation
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/siddharth-1118/ahu.git
+cd ahu
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Create a `.env` file in the root and add your Google Client ID:
+```env
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+### 4. Run locally
+```bash
+npm run dev
+```
+
+---
+
+## 🚀 Deployment (Vercel)
+When deploying to Vercel, ensure you:
+1. Set the **VITE_GOOGLE_CLIENT_ID** environment variable.
+2. Add your deployment URL to the **Authorized JavaScript origins** in Google Cloud Console.
+
+---
+
+## 🎨 Design Language
+- **Colors**: Picksell Palette (Primary: #00E5FF, Dark Surface)
+- **Typography**: Manrope (Bold/Black weight)
+- **Styles**: Mesh Gradients, Glassmorphism, 3D Layers
